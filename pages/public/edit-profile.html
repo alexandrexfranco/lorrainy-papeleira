@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Editar Perfil</title>    
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <link rel="stylesheet" href="../../assets/css/components/modal.css">
+    <link rel="stylesheet" href="../../assets/css/components/loader.css">
+    <link rel="stylesheet" href="../../assets/css/layouts/edit-profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+        <div class="profile-form-card">
+            <h1>
+                <i class="fas fa-user-cog" style="color: var(--primary-color);"></i>
+                Editar Meu Perfil
+            </h1>
+
+            <form id="profile-form">
+                <div class="profile-photo-section">
+                    <div id="profile-photo-clickable-area" title="Clique para alterar a foto">
+                        <img id="profile-photo-preview" src="../../img/placeholder_imagem_default.png">
+                        <div class="camera-overlay-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <input type="file" id="profile-photo-input" name="profile_photo" accept="image/*" style="display: none;">
+                    <p style="font-size: 0.9em; color: #777; margin-top: 10px;">Clique na imagem para mudar a foto.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-nome"><i class="fas fa-user"></i> Nome Completo:</label>
+                    <input type="text" id="profile-nome" name="nome" required readonly disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-email"><i class="fas fa-envelope"></i> Email:</label>
+                    <input type="email" id="profile-email" name="email" readonly disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp:</label>
+                    <input type="tel" id="profile-whatsapp" name="whatsapp" placeholder="(00) 00000-0000">
+                </div>
+
+                <hr style="margin: 1.5rem 0; border-color: #eee;">
+                <h3><i class="fas fa-map-marker-alt" style="color: var(--primary-color);"></i> Endereço</h3>
+
+                <div class="form-group">
+                    <label for="profile-rua">Rua:</label>
+                    <input type="text" id="profile-rua" name="rua">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-numero-casa">Número:</label>
+                    <input type="text" id="profile-numero-casa" name="numero_casa" placeholder="Ex: 123, S/N">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profile-complemento">Complemento:</label>
+                    <input type="text" id="profile-complemento" name="complemento" placeholder="Ex: Apt 4B, Bloco C">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-bairro">Bairro:</label>
+                    <input type="text" id="profile-bairro" name="bairro">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-cidade">Cidade:</label>
+                    <input type="text" id="profile-cidade" name="cidade">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-estado">Estado (UF):</label>
+                    <input type="text" id="profile-estado" name="estado" maxlength="2" placeholder="Ex: SP">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-cep">CEP:</label>
+                    <input type="text" id="profile-cep" name="cep" placeholder="00000-000">
+                </div>
+
+               <div class="form-group">
+                    <label for="profile-ponto-referencia">Ponto de Referência:</label>
+                    <input type="text" id="profile-ponto-referencia" name="ponto_referencia" placeholder="Ex: Próximo à padaria">
+                </div>                <div class="form-footer" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar as Alterações</button>
+                    <a href="../client/dashboard-client.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>    <!-- Dependências externas -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Scripts do sistema -->
+    <script type="module" src="../../assets/js/modules/supabase.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    <script type="module" src="../../assets/js/modules/utils.js"></script>
+    <script type="module" src="../../assets/js/components/toast.js"></script>
+    <script type="module" src="../../assets/js/components/modal.js"></script>
+    <script type="module" src="../../assets/js/components/loader.js"></script>
+    <script type="module" src="../../assets/js/pages/public/edit-profile.js"></script>
+</body>
+</html>

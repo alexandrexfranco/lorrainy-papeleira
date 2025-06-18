@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Projeto Lorrainy</title>
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <!-- <link rel="stylesheet" href="../../assets/css/components/modal.css"> -->
+    <link rel="stylesheet" href="../../assets/css/components/loader.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/layouts/login.css">
+</head>
+<body class="auth-page">
+    <div class="container">
+        <div class="auth-card">
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-login" type="button"><i class="fas fa-sign-in-alt"></i>  Login</button>
+                <button class="tab-btn" id="tab-register" type="button"><i class="fas fa-user-plus"></i>  Cadastrar</button>
+            </div>
+            <div class="forms-container">
+                <div class="form-section active" id="login-section">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="login-email" placeholder="Digite seu email" required>
+                        </div>                        <div class="form-group">
+                            <label for="login-password"><i class="fas fa-lock"></i> Senha</label>
+                            <input type="password" id="login-password" placeholder="Digite sua senha" required>
+                            <a href="#" id="forgot-password-link" class="forgot-password">Esqueceu a senha?</a>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn">Entrar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-section" id="register-section">                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-name"><i class="fas fa-user"></i> Nome Completo</label>
+                            <input type="text" id="register-name" placeholder="Digite seu nome completo" required>
+                        </div>                        <div class="form-group">
+                            <label for="register-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</label>
+                            <input type="tel" 
+                                   id="register-whatsapp" 
+                                   placeholder="(00) 00000-0000" 
+                                   pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
+                                   title="Digite um número de WhatsApp válido: (00) 00000-0000"
+                                   maxlength="15"
+                                   required>
+                            <small class="form-hint">Formato: (00) 00000-0000</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" 
+                                   id="register-email" 
+                                   placeholder="Digite seu email" 
+                                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                   title="Digite um email válido"
+                                   required>
+                            <small class="form-hint">exemplo@dominio.com</small>
+                        </div><div class="form-group">
+                            <label for="register-password"><i class="fas fa-lock"></i> Senha</label>
+                            <input type="password" id="register-password" placeholder="Crie uma senha" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password"><i class="fas fa-lock"></i> Confirmar Senha</label>
+                            <input type="password" id="register-confirm-password" placeholder="Digite a senha novamente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-role"><i class="fas fa-user-tag"></i> Perfil</label>
+                            <input type="text" id="register-role" value="cliente" disabled style="background: #f9f9f9; color: #333; font-weight: 500;">
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    <!-- Modal de Recuperação de Senha -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-key"></i> Recuperar Senha</h2>
+            <div class="modal-body">
+                <p>Digite seu e-mail para receber as instruções de recuperação de senha.</p>
+                <form id="forgot-password-form">
+                    <div class="form-group">
+                        <label for="recovery-email"><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="recovery-email" placeholder="Digite seu e-mail" required>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Cadastro -->
+    <div id="register-confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-envelope-open-text"></i> Cadastro Realizado!</h2>
+            <div class="modal-body">
+                <p>Seu cadastro foi realizado com sucesso! 🎉</p>
+                <p>Para ativar sua conta, por favor:</p>
+                <ol>
+                    <li>Verifique seu e-mail (incluindo a caixa de spam)</li>
+                    <li>Clique no link de confirmação que enviamos</li>
+                    <li>Após confirmar, você poderá fazer login</li>
+                </ol>
+                <div class="modal-footer">
+                    <button type="button" class="btn" onclick="document.getElementById('tab-login').click(); hideModal('register-confirmation-modal');">
+                        <i class="fas fa-check"></i> Entendi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>    <!-- Scripts do sistema -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <!-- Scripts do sistema -->
+    <script type="module">
+        import { auth } from '../../assets/js/modules/auth.js';
+        import { showToast } from '../../assets/js/components/toast.js';
+        import { showModal, hideModal } from '../../assets/js/components/modal.js';
+        import '../../assets/js/modules/supabase.js';
+        import '../../assets/js/modules/utils.js';
+        import Loader from '../../assets/js/components/loader.js';
+
+        const loader = new Loader();        // Inicializa Supabase e Auth
+        document.addEventListener('DOMContentLoaded', async function() {
+            loader.show('Conectando ao servidor...');
+            try {
+                await window.initSupabase();
+                await auth.init();
+                loader.hide();
+            } catch (error) {
+                loader.hide();
+                console.error('Erro na inicialização:', error);
+                showToast(error.message || 'Erro ao conectar ao servidor. Verifique sua conexão com a internet.', 'error');
+                return;
+            }
+
+            // Tabs login/cadastro
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const loginSection = document.getElementById('login-section');
+            const registerSection = document.getElementById('register-section');
+            tabLogin.addEventListener('click', function() {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                loginSection.classList.add('active');
+                registerSection.classList.remove('active');
+            });
+            tabRegister.addEventListener('click', function() {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                registerSection.classList.add('active');
+                loginSection.classList.remove('active');
+            });            // Login
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value;
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                  try {
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                    loader.show('Autenticando...');
+                    
+                    if (!window.supabaseClient) {
+                        throw new Error('Sistema não inicializado. Tente recarregar a página.');
+                    }
+                    
+                    await auth.login(email, password);
+                } catch (err) {
+                    // Reseta o botão e esconde o loader
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                    loader.hide();
+                    // O toast já é chamado pelo auth.js
+                }
+            });            // Formatação e validação do WhatsApp em tempo real
+            const whatsappInput = document.getElementById('register-whatsapp');
+            whatsappInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    if (value.length > 2) {
+                        value = '(' + value.substring(0,2) + ') ' + value.substring(2);
+                    }
+                    if (value.length > 9) {
+                        value = value.substring(0,10) + '-' + value.substring(10);
+                    }
+                    e.target.value = value;
+                }
+            });
+
+            // Validação do email em tempo real
+            const emailInput = document.getElementById('register-email');
+            emailInput.addEventListener('input', function(e) {
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (e.target.value && !emailRegex.test(e.target.value)) {
+                    e.target.setCustomValidity('Por favor, insira um email válido');
+                } else {
+                    e.target.setCustomValidity('');
+                }
+            });
+
+            // Cadastro
+            document.getElementById('register-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('register-name').value.trim();
+                const whatsapp = document.getElementById('register-whatsapp').value.trim();
+                const email = document.getElementById('register-email').value.trim();
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+
+                // Validação completa antes do envio
+                const whatsappRegex = /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/;
+                if (!whatsappRegex.test(whatsapp)) {
+                    showToast('Digite um número de WhatsApp válido no formato (00) 00000-0000', 'error');
+                    return;
+                }
+
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRegex.test(email)) {
+                    showToast('Digite um endereço de email válido', 'error');
+                    return;
+                }
+
+                // Validar se as senhas coincidem
+                if (password !== confirmPassword) {
+                    showToast('As senhas não coincidem. Por favor, verifique.', 'error');
+                    return;
+                }
+
+                // Validar força da senha
+                if (password.length < 6) {
+                    showToast('A senha deve ter pelo menos 6 caracteres.', 'error');
+                    return;
+                }
+
+                // Cadastro via Supabase
+                try {
+                    const { data, error } = await window.supabaseClient.auth.signUp({
+                        email,
+                        password
+                    });
+                    if (error) throw error;
+                    // Salva dados extras na tabela usuarios
+                    await window.supabaseClient.from('usuarios').insert({
+                        id: data.user.id,
+                        nome: name,
+                        whatsapp: whatsapp,
+                        email: email,
+                        tipo: 'cliente'
+                    });
+                    window.showModal('register-confirmation-modal');
+                } catch (err) {
+                    toast.show(err.message || 'Erro ao cadastrar', 'error');
+                }
+            });
+
+            // Recuperação de senha
+            document.getElementById('forgot-password-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.showModal('forgot-password-modal');
+            });
+            document.getElementById('forgot-password-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('recovery-email').value.trim();
+                try {
+                    await auth.resetPassword(email);
+                    window.hideModal('forgot-password-modal');
+                } catch (err) {
+                    // toast já é chamado pelo auth.js
+                }
+            });
+        });
+    </script>
+</body>
+</html>

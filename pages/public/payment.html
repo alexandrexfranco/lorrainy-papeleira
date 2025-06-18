@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento de Plano</title>
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .pagamento-container {
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0001;
+            padding: 2.5rem 2rem 2rem 2rem;
+            text-align: center;
+        }
+        .pagamento-container h1 {
+            color: #4a4a8a;
+            margin-bottom: 0.5rem;
+        }
+        .pagamento-container .plano-card {
+            border: 2px solid #4a4a8a;
+            border-radius: 10px;
+            margin: 1.5rem 0 2rem 0;
+            padding: 1.2rem 1rem;
+            background: #f8f8ff;
+        }
+        .pagamento-container .btn-pagamento {
+            background: #4a4a8a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.8rem 2.2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.2rem;
+            transition: background 0.2s;
+        }
+        .pagamento-container .btn-pagamento:hover {
+            background: #35356b;
+        }
+        .pagamento-container .info {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .pagamento-container .voltar {
+            margin-top: 2rem;
+            display: block;
+            color: #4a4a8a;
+            text-decoration: underline;
+            font-size: 1rem;
+        }
+        #modal-pix {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0008;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        #modal-pix .modal-content {
+            background: #fff;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            border-radius: 12px;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 2px 16px #0002;
+            position: relative;
+        }
+        #modal-pix .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+        }
+        #modal-pix h2 {
+            color: #4a4a8a;
+            margin-bottom: 0.7rem;
+        }
+        #modal-pix .chave-pix {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #333;
+            background: #f5f5ff;
+            padding: 0.7rem 0.5rem;
+            border-radius: 7px;
+            word-break: break-all;
+            margin-bottom: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="pagamento-container">
+        <h1><i class="fas fa-crown"></i> Pagamento do Plano</h1>
+        <div class="info">
+            Para continuar utilizando todos os recursos do sistema, escolha ou renove seu plano premium.<br>
+            O plano grátis permite até 5 pedidos por mês.<br>
+            O plano premium libera pedidos ilimitados e suporte prioritário.
+        </div>
+        <div class="plano-card">
+            <h2 style="color:#4a4a8a;margin-bottom:0.3rem;">Plano Premium</h2>
+            <div style="font-size:1.1rem;margin-bottom:0.7rem;">Pedidos ilimitados<br>Suporte prioritário<br>R$ 39,90/mês</div>
+            <button class="btn-pagamento" id="btn-pagar-premium"><i class="fas fa-credit-card"></i> Assinar Premium</button>
+        </div>
+        <button class="btn-pagamento" onclick="window.location.href='login.html'" style="margin-top:2rem;"><i class="fas fa-arrow-left"></i> Voltar para login</button>
+    </div>
+
+    <div id="modal-pix">
+        <div class="modal-content">
+            <button id="fechar-modal-pix" class="close-modal">&times;</button>
+            <h2><i class="fas fa-qrcode"></i> Pagamento via Pix</h2>
+            <div style="font-size:1.1rem;margin-bottom:0.7rem;">Chave Pix:</div>
+            <div class="chave-pix">sejamaislivre.com@gmail.com</div>
+            <div style="margin-top:1.2rem;font-size:0.98rem;color:#555;">Após o pagamento, envie o comprovante para o WhatsApp do suporte para liberação do plano.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn-pagar-premium').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('modal-pix').style.display = 'flex';
+        };
+        document.getElementById('fechar-modal-pix').onclick = function() {
+            document.getElementById('modal-pix').style.display = 'none';
+        };
+        // Fecha modal ao clicar fora
+        document.getElementById('modal-pix').onclick = function(e) {
+            if (e.target === this) this.style.display = 'none';
+        };
+    </script>
+</body>
+</html>

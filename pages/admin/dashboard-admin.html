@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <!-- Supabase CDN deve ser carregado primeiro -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Estilos do sistema -->
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <link rel="stylesheet" href="../../assets/css/components/modal.css">
+    <link rel="stylesheet" href="../../assets/css/components/loader.css">    <link rel="stylesheet" href="../../assets/css/layouts/admin.css">
+    <link rel="stylesheet" href="../../assets/css/components/status.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bibliotecas externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="dashboard-body">
+    <!-- NOVO HEADER PROFISSIONAL ADMIN -->
+    <section class="admin-profile-header">
+        <div class="admin-profile-card">
+            <div class="admin-profile-photo-container">
+                <label for="admin-profile-photo-input" style="cursor:pointer;">
+                    <img id="admin-profile-photo" src="../../img/placeholder_imagem_default.png" alt="Foto do Administrador" class="admin-profile-photo" title="Clique para alterar a foto">
+                </label>
+                <input type="file" id="admin-profile-photo-input" accept="image/*" style="display:none;">
+            </div>
+            <div class="admin-profile-info">
+                <h2><span id="admin-profile-nome" class="admin-profile-nome" style="color: var(--primary-color);">Carregando...</span></h2>
+                <span class="admin-profile-cargo">Administrador</span>
+                <span id="admin-profile-plano" class="admin-profile-plano" style="font-size:0.95em;font-weight:bold;color:#4a4a8a;display:block;margin-top:2px;">Plano: ...</span>
+                <span id="admin-profile-vencimento" class="admin-profile-vencimento" style="font-size:0.95em;font-weight:bold;color:#4a4a8a;display:block;">Vencimento: ...</span>
+                <button id="logout-button" class="btn-logout admin-logout-below" title="Sair">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Header antigo oculto -->
+    <section class="admin-header-section" style="display:none;">
+        <h1 id="welcome">Bem-vindo, Administrador!</h1>
+        <p class="subtitle">Acompanhe os principais indicadores e gerencie usuários do sistema.</p>
+    </section>
+    <main class="dashboard-admin-main">
+        <section class="admin-cards-section">
+            <div class="admin-card highlight">
+                <div class="admin-card-icon"><i class="fas fa-users"></i></div>
+                <div class="admin-card-info">
+                    <span class="admin-card-title">Clientes</span>
+                    <span class="admin-card-value" id="total-usuarios">...</span>
+                </div>
+            </div>
+            <div class="admin-card highlight">
+                <div class="admin-card-icon"><i class="fas fa-shopping-bag"></i></div>
+                <div class="admin-card-info">
+                    <span class="admin-card-title">Pedidos</span>
+                    <span class="admin-card-value" id="total-pedidos">...</span>
+                </div>
+            </div>
+            <div class="admin-card highlight">
+                <div class="admin-card-icon"><i class="fas fa-coins"></i></div>
+                <div class="admin-card-info">
+                    <span class="admin-card-title">Fat. Mês</span>
+                    <span class="admin-card-value" id="faturamento-mes">...</span>
+                </div>
+            </div>            <div class="admin-card highlight">
+                <div class="admin-card-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="admin-card-info">
+                    <span class="admin-card-title">Fat. Ano</span>
+                    <span class="admin-card-value" id="faturamento-ano">...</span>
+                </div>
+            </div>
+        </section>        <section class="admin-graph-section">
+            <div class="admin-card highlight" style="width:100%;max-width:100%;height:300px;">
+                <div class="admin-card-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="admin-card-info">
+                    <span class="admin-card-title">Pedidos por Mês</span>
+                    <div style="height:240px;position:relative;">
+                        <canvas id="grafico-pedidos-mes"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="admin-list-section">
+            <div class="admin-list-card">
+                <div class="admin-list-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Lista de Pedidos</span>
+                </div>                <div class="admin-filtros-pedidos" style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="filtro-pedidos-busca" placeholder="Buscar por cliente, tema..." style="min-width:180px;">
+                    </div>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-tasks"></i>
+                        <select id="filtro-pedidos-status">
+                            <option value="">Todos Status</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Aprovado">Aprovado</option>
+                            <option value="Em produção">Em produção</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Entregue">Entregue</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="month" id="filtro-pedidos-mes">
+                    </div>                </div>
+                <ul id="lista-pedidos-admin" class="admin-pedidos-list">
+                    <li>Carregando pedidos...</li>
+                </ul>
+            </div>
+        </section>
+        <section class="admin-list-section">
+            <div class="admin-list-card">
+                <div class="admin-list-header">
+                    <i class="fas fa-list"></i>
+                    <span>Lista de Clientes</span>
+                </div>
+                <div class="admin-filtros-clientes" style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="filtro-clientes-busca" placeholder="Buscar por nome, email ou WhatsApp" style="min-width:180px;">
+                    </div>
+                </div>
+                <ul id="lista-usuarios" class="admin-user-list">
+                    <!-- Exemplo de item, será preenchido via JS -->
+                    <!--
+                    <li>
+                        <div class="admin-user-info">
+                            <span><b>Nome:</b> Fulano da Silva</span>
+                            <span><b>Email:</b> fulano@email.com</span>
+                            <span><b>Tipo:</b> Cliente</span>
+                            <span><b>WhatsApp:</b> (11) 99999-9999</span>
+                        </div>
+                    </li>
+                    -->
+                    <li>Carregando usuários...</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <!-- Modal para editar pedido completo -->
+<div id="modal-editar-pedido" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <span id="modal-editar-pedido-close" class="modal-close">&times;</span>
+        <h2>Editar Pedido</h2>
+        <form id="form-editar-pedido">
+            <input type="hidden" id="editar-id-pedido">
+            <div class="form-group">
+                <label for="editar-tema-pedido">Tema:</label>
+                <input type="text" id="editar-tema-pedido" required>
+            </div>
+            <div class="form-group">
+                <label for="editar-tamanho-pedido">Tamanho:</label>
+                <input type="text" id="editar-tamanho-pedido">
+            </div>
+            <div class="form-group">
+                <label for="editar-data-pedido">Data do Evento:</label>
+                <input type="date" id="editar-data-pedido" required>
+            </div>
+            <div class="form-group">
+                <label for="editar-status-pedido">Status:</label>
+                <select id="editar-status-pedido" required>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Aprovado">Aprovado</option>
+                    <option value="Em produção">Em produção</option>
+                    <option value="Finalizado">Finalizado</option>
+                    <option value="Entregue">Entregue</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editar-valor-pedido">Valor (R$):</label>
+                <input type="number" id="editar-valor-pedido" min="0" step="0.01" required>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="btn">Salvar</button>
+                <button type="button" id="cancelar-editar-pedido" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>    <!-- Scripts do sistema -->
+    <!-- Importação centralizada: admin.js importa todos os módulos necessários -->
+    <script type="module" src="../../assets/js/pages/admin/admin.js"></script>
+</body>
+</html>

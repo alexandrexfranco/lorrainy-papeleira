@@ -1,0 +1,434 @@
+/* Reset de layout específico para páginas de dashboard */
+.dashboard-body {
+    display: block !important;
+    padding: 0 !important;
+    align-items: initial !important;
+    justify-content: initial !important;
+    background-color: var(--color-background) !important;
+}
+
+/* Container principal */
+.dashboard-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+/* Cabeçalho do conteúdo */
+.content-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.content-header h1 {
+    color: var(--color-text);
+    font-size: var(--font-size-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: 0;
+}
+
+.content-header h1 i {
+    color: var(--color-primary);
+}
+
+/* Estilos específicos para o Cliente Dashboard */
+.client-header {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+}
+
+.client-main {
+    padding: var(--spacing-lg);
+}
+
+/* Cards do Cliente */
+.client-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.client-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Lista de Pedidos do Cliente */
+.client-pedidos {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.pedido-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Formulário de Novo Pedido */
+.order-form-card {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.order-form-card {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.form-section {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section h2 {
+    color: var(--color-primary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.form-section h2 i {
+    color: var(--color-primary);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.form-group label i {
+    color: var(--color-primary);
+    margin-right: var(--spacing-xs);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: var(--transition-normal);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin-top: var(--spacing-lg);
+}
+
+/* Perfil do Cliente */
+.client-profile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-section {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Status dos pedidos foram movidos para components/status.css */
+
+.status-cancelado {
+    background-color: var(--color-error);
+    color: white;
+}
+
+.address-info {
+    background-color: var(--color-info-light);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.address-info i {
+    color: var(--color-info);
+}
+
+.address-preview {
+    margin-top: var(--spacing-sm);
+}
+
+.address-card {
+    background-color: var(--color-background);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.alert {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.alert-warning {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+    border: 1px solid var(--color-warning);
+}
+
+.alert i {
+    margin-right: var(--spacing-xs);
+}
+
+/* Estilos para o botão de comunicação WhatsApp */
+.btn-comunicar {
+    background-color: #25D366 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: var(--border-radius-sm) !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    min-width: 120px !important;
+}
+
+.btn-comunicar:hover {
+    background-color: #128C7E !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn-comunicar i {
+    font-size: 1.1em !important;
+}
+
+/* Ajuste do container de ações para acomodar o novo botão */
+.pedido-v3-acao {
+    display: flex !important;
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+}
+
+/* Estilos para os contatos no profile card */
+/* Estilos compartilhados entre admin e cliente */
+.profile-contacts {
+    margin-top: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-contact {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 0.95em !important;
+    color: #4a4a8a !important;
+}
+
+.profile-contact i {
+    font-size: 1.1em;
+    width: 16px;
+    text-align: center;
+}
+
+.profile-contact .contact-info {
+    color: var(--color-text);
+}
+
+/* Estilos específicos do cliente */
+.client-profile-header {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.client-profile-card {
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+}
+
+/* Estilos específicos para o perfil */
+.client-profile-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.client-profile-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.client-profile-photo-container {
+    flex-shrink: 0;
+}
+
+.client-profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+.client-profile-info {
+    flex-grow: 1;
+}
+
+.client-profile-nome {
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.client-profile-cargo {
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-contact {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-color);
+    font-size: var(--font-size-md);
+}
+
+.profile-contact i {
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.contact-info {
+    color: var(--text-color);
+}
+
+/* Botão de logout */
+.client-logout-below {
+    margin-top: var(--spacing-md);
+    background: none;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 8px 16px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.client-logout-below:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .client-main {
+        padding: var(--spacing-md);
+    }
+
+    .client-pedidos {
+        grid-template-columns: 1fr;
+    }
+
+    .order-form-card {
+        margin: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .client-profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-md);
+    }
+
+    .client-profile-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-contacts {
+        align-items: center;
+    }
+}

@@ -1,0 +1,303 @@
+/* Estilos específicos para a página de login (auth-card, tabs, formulários, responsividade) */
+
+html, body {
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+}
+body {
+    width: 100vw;
+    box-sizing: border-box;
+}
+.container {
+    width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.auth-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(44,62,80,0.10), 0 1.5px 4px rgba(44,62,80,0.08);
+    width: 100%;
+    max-width: 350px;
+    min-width: 0;
+    margin: 3.5rem auto 0 auto;
+    padding: 2.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.7s;
+}
+.auth-header h1 {
+    color: #ff69b4;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
+}
+.auth-header p {
+    color: #666;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+.tabs {
+    display: flex;
+    width: 100%;
+    margin-bottom: 2rem;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    padding: 1rem 0;
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+.tab-btn.active {
+    color: #ff69b4;
+    border-bottom: 2.5px solid #ff69b4;
+    background: #fff;
+}
+.tab-btn i {
+    margin-right: 7px;
+    color: #ff69b4;
+}
+.forms-container {
+    width: 100%;
+    padding: 0;
+}
+.form-section {
+    display: none;
+    animation: fadeIn 0.3s;
+}
+.form-section.active {
+    display: block;
+}
+.form-group {
+    margin-bottom: 1.3rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #ff69b4;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.form-group label i {
+    margin-right: 7px;
+    color: #ff69b4;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"] {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 7px;
+    background: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    transition: border 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+.form-group input:focus {
+    border-color: #ff69b4;
+    background: #fff;
+}
+.form-footer {
+    margin-top: 1.2rem;
+    text-align: center;
+}
+.btn {
+    background: #ff69b4;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(255,105,180,0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.6rem;
+}
+.btn:hover {
+    background: #ff1493;
+    transform: translateY(-2px) scale(1.03);
+}
+.forgot-password {
+    display: block;
+    margin-top: 0.5rem;
+    color: #ff69b4;
+    font-size: 0.98rem;
+    text-align: right;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.forgot-password:hover {
+    color: #ff1493;
+}
+/* Modais da página de login */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(0,0,0,0.45);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s;
+}
+.modal.show {
+    display: grid !important;
+    place-items: center !important;
+}
+.modal-content {
+    background: #fff;
+    padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+    border-radius: 14px;
+    max-width: 370px;
+    width: 95vw;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.13), 0 1.5px 4px rgba(44,62,80,0.08);
+    position: relative;
+    animation: zoomIn 0.3s;
+}
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 2rem;
+    color: #bbb;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 2;
+    line-height: 1;
+}
+.close-modal:hover {
+    color: #ff69b4;
+}
+.modal-content h2 {
+    text-align: center;
+    color: #ff69b4;
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.modal-body {
+    margin-bottom: 1.2rem;
+    color: #444;
+    font-size: 1.02rem;
+}
+.modal-body p {
+    margin-bottom: 0.7rem;
+}
+.modal-body ol {
+    padding-left: 1.3rem;
+    margin-bottom: 0.7rem;
+}
+.modal-body ol li {
+    margin-bottom: 0.4rem;
+    color: #555;
+    font-size: 0.98rem;
+}
+.modal-footer {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+}
+.form-hint {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Estilo para campos com erro de validação */
+input:invalid:not(:placeholder-shown) {
+    border-color: #dc3545;
+}
+
+/* Estilo para campos válidos */
+input:valid:not(:placeholder-shown) {
+    border-color: #28a745;
+}
+
+/* Mostra a mensagem de erro customizada */
+input:invalid:not(:placeholder-shown) ~ .form-hint {
+    color: #dc3545;
+}
+@media (max-width: 600px) {
+    .auth-card {
+        max-width: 86vw;
+        width: 86vw;
+        min-width: 0;
+        padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+        margin: 1.2rem auto 0 auto;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+    }
+    .auth-header h1 {
+        font-size: 1.4rem;
+    }
+    .tabs {
+        font-size: 0.98rem;
+    }
+    .form-group input {
+        font-size: 0.98rem;
+        padding: 0.7rem 0.8rem;
+    }
+    .btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.2rem;
+    }
+    .forms-container {
+        padding: 0;
+    }
+    .modal-content {
+        max-width: 99vw;
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+        border-radius: 10px;
+        margin: 0 !important;
+    }
+    .modal-content h2 {
+        font-size: 1.05rem;
+    }
+    .container {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0;
+    }
+}

@@ -1,0 +1,90 @@
+/* Estilos específicos para o Admin Dashboard */
+.admin-header {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-sidebar {
+    background-color: var(--color-surface);
+    min-height: 100vh;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-main {
+    padding: var(--spacing-lg);
+}
+
+/* Cards do Dashboard */
+.admin-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.admin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-card.clickable {
+    cursor: pointer;
+}
+
+/* Lista de Pedidos */
+.admin-list-card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+/* Status dos Pedidos são definidos globalmente em components/status.css */
+
+/* Formulários Admin */
+.admin-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* Tabelas Admin */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-md) 0;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-background);
+    text-align: left;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        position: fixed;
+        left: -250px;
+        width: 250px;
+        z-index: var(--z-index-dropdown);
+    }
+
+    .admin-sidebar.active {
+        left: 0;
+    }
+
+    .admin-main {
+        margin-left: 0;
+        padding: var(--spacing-md);
+    }
+}

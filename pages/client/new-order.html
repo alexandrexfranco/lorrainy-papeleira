@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Pedido | Confeitaria</title>
+    
+    <!-- Estilos -->    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <link rel="stylesheet" href="../../assets/css/components/loader.css">
+    <link rel="stylesheet" href="../../assets/css/layouts/client.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <style>
+        /* Estilos base do formulário */
+        .order-form-card {
+            background-color: var(--color-surface);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .form-section {
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .form-section h2 {
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-sm);
+            font-size: 1rem;
+            transition: var(--transition-normal);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Estilos para mensagens e alertas */
+        .address-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .address-preview {
+            background-color: var(--color-background);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--color-border);
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <div class="content-header">
+            <h1><i class="fas fa-plus-circle" style="color: var(--color-primary);"></i> Novo Pedido</h1>
+        </div>
+
+        <div class="order-form-card">
+            <form id="new-order-form">
+                    <!-- Seção: Informações do Pedido -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-info-circle"></i> Dados do Pedido</h2>
+                        
+                        <div class="form-group">
+                            <label for="tema"><i class="fas fa-palette"></i> Tema do Bolo:</label>
+                            <input type="text" id="tema" name="tema" required 
+                                placeholder="Ex: Frozen, Super-Heróis, Flores">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tamanho_bolo"><i class="fas fa-birthday-cake"></i> Tamanho do Bolo:</label>
+                            <select id="tamanho_bolo" name="tamanho_bolo" required>
+                                <option value="">Selecione o tamanho</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data_evento"><i class="fas fa-calendar-alt"></i> Data do Evento:</label>
+                            <input type="date" id="data_evento" name="data_evento" required>
+                        </div>
+                    </div>
+
+                    <!-- Seção: Detalhes do Pedido -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-list-ul"></i> Detalhes do Pedido</h2>
+                        
+                        <div class="form-group">
+                            <label for="descricao_pedido">
+                                <i class="fas fa-align-left"></i> Descrição do Pedido:
+                            </label>
+                            <textarea id="descricao_pedido" name="descricao_pedido" rows="4" required
+                                placeholder="Descreva os detalhes do seu pedido, como cores, personagens, etc."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacao_pedido">
+                                <i class="fas fa-comment-alt"></i> Observações Adicionais:
+                            </label>
+                            <textarea id="observacao_pedido" name="observacao_pedido" rows="3"
+                                placeholder="Alguma observação especial? (Opcional)"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Seção: Entrega -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-truck"></i> Entrega</h2>
+                        
+                        <div class="form-group">
+                            <label for="tipo_entrega"><i class="fas fa-map-marker-alt"></i> Tipo de Entrega:</label>
+                            <select id="tipo_entrega" name="tipo_entrega" required>
+                                <option value="retirar">Retirar no Local</option>
+                                <option value="entregar">Entrega em Casa</option>
+                            </select>
+                        </div>
+
+                        <div id="endereco_entrega_group" class="form-group" style="display: none;">
+                            <p class="address-info">
+                                <i class="fas fa-info-circle"></i>
+                                Será utilizado o endereço cadastrado no seu perfil.
+                                <a href="../public/edit-profile.html" class="link-primary">
+                                    <i class="fas fa-edit"></i> Editar Endereço
+                                </a>
+                            </p>
+                            <div id="endereco_preview" class="address-preview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Enviar Pedido
+                        </button>
+                        <a href="dashboard-client.html" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Toast container -->
+        <div id="toast-container"></div>
+        
+        <!-- Loader container -->
+        <div id="loader-container" class="loader-overlay" style="display: none;">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <!-- Dependências externas -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Scripts do sistema -->
+    <script type="module" src="../../assets/js/modules/supabase.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    <script type="module" src="../../assets/js/modules/utils.js"></script>
+    <script type="module" src="../../assets/js/components/toast.js"></script>
+    <script type="module" src="../../assets/js/components/loader.js"></script>
+    <script type="module" src="../../assets/js/pages/client/new-order.js"></script>
+</body>
+</html>

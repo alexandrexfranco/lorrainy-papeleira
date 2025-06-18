@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cliente - Lorrainy Papeleira</title>
+    <!-- Supabase CDN deve ser carregado primeiro -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <link rel="stylesheet" href="../../assets/css/shared/base.css">
+    <link rel="stylesheet" href="../../assets/css/shared/variables.css">
+    <link rel="stylesheet" href="../../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../assets/css/components/toast.css">
+    <link rel="stylesheet" href="../../assets/css/components/modal.css">
+    <link rel="stylesheet" href="../../assets/css/components/loader.css">    <link rel="stylesheet" href="../../assets/css/layouts/client.css">
+    <link rel="stylesheet" href="../../assets/css/components/status.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">    <div class="dashboard-container">
+        <!-- NOVO HEADER PROFISSIONAL CLIENTE -->        <section class="client-profile-header">
+            <div class="client-profile-card">
+                <div class="client-profile-photo-container">
+                    <label for="client-profile-photo-input" style="cursor:pointer;">
+                        <img id="profile-photo-preview" src="../../img/placeholder_imagem_default.png" alt="Foto do Cliente" class="client-profile-photo" title="Clique para alterar a foto">
+                    </label>
+                    <input type="file" id="client-profile-photo-input" accept="image/*" style="display:none;">
+                </div>
+                <div class="client-profile-info">
+                    <h2><span id="nome-profile-cliente" class="client-profile-nome" style="color: var(--primary-color);">Carregando...</span></h2>
+                    <span class="client-profile-cargo">Cliente</span>                    <div class="profile-contacts">
+                        <span id="client-profile-whatsapp" class="profile-contact" title="WhatsApp">
+                            <span class="contact-info">...</span>
+                        </span>
+                        <span id="client-profile-email" class="profile-contact" title="Email">
+                            <span class="contact-info">...</span>
+                        </span>
+                    </div>
+                    <button id="logout-button" class="btn-logout client-logout-below" title="Sair">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <i class="fas fa-star"></i>
+                    <h2>Ações Rápidas</h2>
+                </div>
+                <div class="card-body">                    <div class="quick-actions">
+                        <a href="new-order.html" class="action-btn" role="button">
+                            <i class="fas fa-plus"></i>
+                            Novo Pedido
+                        </a>
+                        <button class="action-btn" id="btn-atualizar-perfil-dashboard">
+                            <i class="fas fa-user-edit"></i>
+                            Atualizar Perfil
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h2>Meus Pedidos</h2>
+                </div>
+                <div class="card-body body-lista-pedidos">
+                    <ul id="lista-pedidos" class="pedidos-list">
+                        <li class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Carregando pedidos...
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="novo-pedido-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span id="novo-pedido-modal-close-btn" class="modal-close">&times;</span>
+            <h2><i class="fas fa-plus-circle" style="color: var(--primary-color);"></i> Fazer Novo Pedido</h2>
+            <form id="novo-pedido-form">
+                <div class="form-group">
+                    <label for="pedido-nome-cliente">Nome Completo:</label>
+                    <input type="text" id="pedido-nome-cliente" readonly disabled>
+                </div>
+                <div class="form-group">
+                    <label for="pedido-whatsapp-cliente">WhatsApp:</label>
+                    <input type="text" id="pedido-whatsapp-cliente" readonly disabled>
+                </div>
+                <hr style="margin: 1rem 0;">
+                <div class="form-group">
+                    <label for="pedido-tema">Tema do Pedido:</label>
+                    <input type="text" id="pedido-tema" name="tema" required placeholder="Ex: Festa Junina, Aniversário Minnie">
+                </div>
+                <div class="form-group">
+                    <label for="pedido-tamanho-bolo">Tamanho do Bolo:</label>
+                    <select id="pedido-tamanho-bolo" name="tamanho_bolo_cm">
+                        <option value="">Selecione o tamanho (opcional)</option>
+                        </select>
+                    <small>Se não for bolo ou outro tamanho, especifique na descrição.</small>
+                </div>
+                <div class="form-group">
+                    <label for="pedido-data-evento">Data do Evento/Entrega Desejada:</label>
+                    <input type="date" id="pedido-data-evento" name="data_evento" required>
+                </div>
+                <div class="form-group">
+                    <label for="pedido-tipo-entrega">Tipo de Entrega:</label>
+                    <select id="pedido-tipo-entrega" name="tipo_entrega" required>
+                        <option value="retirar">Retirar no Local</option>
+                        <option value="entregar">Entrega (verificar disponibilidade e taxa)</option>
+                    </select>
+                </div>
+                <div id="pedido-endereco-entrega-group" class="form-group" style="display: none; border: 1px dashed #ccc; padding: 10px; border-radius: var(--border-radius);">
+                    <label>Endereço para Entrega:</label>
+                    <p id="pedido-endereco-preview" style="background: #f9f9f9; padding: 8px; border-radius: 4px; min-height: 30px;"></p>
+                    <small>Será usado seu endereço cadastrado. Para alterar, edite seu perfil.</small>
+                </div>
+                <div class="form-group">
+                    <label for="pedido-descricao">Descrição Detalhada do Pedido:</label>
+                    <input type="text" id="pedido-descricao" name="descricao" placeholder="Especifique cores, personagens, nomes, idades, quantidades de outros itens, etc." required>
+                </div>
+                <div class="form-group">
+                    <label for="pedido-observacao">Observações Adicionais (opcional):</label>
+                    <input type="text" id="pedido-observacao" name="observacao_pedido" placeholder="Alguma preferência, restrição ou detalhe extra?">
+                </div>                <div class="form-footer">
+                    <button type="button" id="novo-pedido-modal-cancelar-btn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" id="novo-pedido-submit-btn" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Enviar Pedido
+                    </button>
+                </div>
+            </form>
+            <div id="novo-pedido-modal-message" style="margin-top: 15px; text-align: center; min-height: 1.5em;"></div>
+        </div>
+    </div>    <!-- Modal de Detalhes do Pedido -->    <div id="detalhes-pedido-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content modal-pedido">
+            <span id="detalhes-pedido-modal-close-btn" class="modal-close">&times;</span>
+            
+            <div class="pedido-content-wrapper">
+                <!-- Status e Número do Pedido -->
+                <div class="pedido-info-section pedido-status-header">
+                    <div class="pedido-header-flex">
+                        <h3 id="detalhe-numero-pedido" class="numero-pedido"></h3>
+                        <span class="status-pedido" id="detalhe-status-pedido"></span>
+                    </div>
+                </div>
+                <!-- Informações Principais -->
+                <div class="pedido-info-section">
+                    <h3><i class="fas fa-info-circle"></i> Informações Principais</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-palette"></i>
+                                Tema
+                            </span>
+                            <span class="info-value" id="detalhe-tema"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-birthday-cake"></i>
+                                Tamanho
+                            </span>
+                            <span class="info-value" id="detalhe-tamanho"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações de Entrega -->
+                <div class="pedido-info-section">
+                    <h3><i class="fas fa-truck"></i> Informações de Entrega</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                Data do Evento
+                            </span>
+                            <span class="info-value" id="detalhe-data"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Tipo de Entrega
+                            </span>
+                            <span class="info-value" id="detalhe-tipo-entrega"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalhes do Pedido -->
+                <div class="pedido-info-section">
+                    <h3><i class="fas fa-list-ul"></i> Detalhes</h3>
+                    <div class="info-descricao">
+                        <div class="info-item full-width">
+                            <span class="info-label">
+                                <i class="fas fa-align-left"></i>
+                                Descrição
+                            </span>
+                            <span class="info-value" id="detalhe-descricao"></span>
+                        </div>
+                        <div class="info-item full-width">
+                            <span class="info-label">
+                                <i class="fas fa-comment-alt"></i>
+                                Observações
+                            </span>
+                            <span class="info-value" id="detalhe-observacao"></span>
+                        </div>
+                    </div>
+                </div>                <!-- Botões de Ação -->
+                <div class="pedido-actions">
+                    <button id="fechar-detalhes-pedido" class="btn btn-primary">
+                        <i class="fas fa-times"></i>
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedback-modal" class="feedback-modal-overlay" style="display: none;">
+        <div class="feedback-modal-content">
+            <span id="feedback-modal-close-btn" class="feedback-modal-close">&times;</span>
+            <div id="feedback-modal-icon"></div>
+            <h3 id="feedback-modal-title"></h3>
+            <p id="feedback-modal-message"></p>
+            <button id="feedback-modal-ok-btn" class="btn">OK</button>
+        </div>
+    </div>    <div id="editar-pedido-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span id="editar-pedido-modal-close-btn" class="modal-close">&times;</span>
+            <h2><i class="fas fa-edit" style="color: var(--primary-color);"></i> Editar Pedido</h2>
+            <form id="editar-pedido-form">
+                <div class="form-group">
+                    <label for="editar-pedido-tema">Tema do Pedido:</label>
+                    <input type="text" id="editar-pedido-tema" name="tema" required>
+                </div>
+                <div class="form-group">
+                    <label for="editar-pedido-tamanho">Tamanho do Bolo:</label>
+                    <select id="editar-pedido-tamanho" name="tamanho_bolo_cm">
+                        <option value="">Selecione o tamanho (opcional)</option>
+                    </select>
+                    <small>Se não for bolo ou outro tamanho, especifique na descrição.</small>
+                </div>
+                <div class="form-group">
+                    <label for="editar-pedido-data">Data do Evento/Entrega:</label>
+                    <input type="date" id="editar-pedido-data" name="data_evento" required>
+                </div>
+                <div class="form-group">
+                    <label for="editar-pedido-tipo-entrega">Tipo de Entrega:</label>
+                    <select id="editar-pedido-tipo-entrega" name="tipo_entrega" required>
+                        <option value="retirar">Retirar no Local</option>
+                        <option value="entregar">Entrega (verificar disponibilidade e taxa)</option>
+                    </select>
+                </div>
+                <div id="editar-pedido-endereco-group" class="form-group" style="display: none;">
+                    <label>Endereço para Entrega:</label>
+                    <p id="editar-pedido-endereco-preview" style="background: #f9f9f9; padding: 8px; border-radius: 4px; min-height: 30px;"></p>
+                    <small>O endereço será o mesmo cadastrado no seu perfil. Para alterar, edite seu perfil.</small>
+                </div>                <div class="form-group">
+                    <label for="editar-pedido-descricao">Descrição do Pedido:</label>
+                    <input type="text" id="editar-pedido-descricao" name="descricao" required 
+                           placeholder="Especifique cores, personagens, nomes, idades, quantidades de outros itens, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="editar-pedido-observacao">Observações Adicionais:</label>
+                    <input type="text" id="editar-pedido-observacao" name="observacao"
+                           placeholder="Alguma preferência, restrição ou detalhe extra? (opcional)">
+                </div>
+                <div id="editar-pedido-modal-message"></div>
+                <div class="form-footer">
+                    <button type="button" id="editar-pedido-cancelar-btn" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" id="editar-pedido-submit-btn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Scripts do sistema -->
+    <script type="module" src="../../assets/js/modules/supabase.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    <script type="module" src="../../assets/js/modules/utils.js"></script>
+    <script type="module" src="../../assets/js/components/toast.js"></script>
+    <script type="module" src="../../assets/js/components/modal.js"></script>
+    <script type="module" src="../../assets/js/components/loader.js"></script>    <script type="module" src="../../assets/js/pages/client/client.js"></script>
+    <script type="module" src="../../assets/js/pages/client/client-dashboard.js"></script>
+</body>
+</html>

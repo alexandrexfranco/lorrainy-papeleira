@@ -1,0 +1,69 @@
+/* Status dos Pedidos - Componente Global */
+
+/* Base styles para todos os status */
+.status-pedido,
+.pedido-status {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    font-size: 0.7em;
+    font-weight: 500;
+    text-align: center;
+    min-width: 100px;
+}
+
+/* Status: Pendente - Amarelo */
+.status-pendente,
+[data-status="Pendente"],
+.status-pedido.status-pendente {
+    background-color: #FFA000 !important; /* Amarelo âmbar */
+    color: #000000 !important;
+}
+
+/* Status: Aprovado - Verde Claro */
+.status-aprovado,
+[data-status="Aprovado"],
+.status-pedido.status-aprovado {
+    background-color: #66BB6A !important; /* Verde Material */
+    color: #FFFFFF !important;
+}
+
+/* Status: Em Produção - Azul */
+.status-em-producao,
+[data-status="Em Produção"],
+.status-pedido.status-em-producao,
+.pedido-status.emprodução {
+    background-color: #2196F3 !important; /* Azul Material */
+    color: #FFFFFF !important;
+}
+
+/* Status: Finalizado - Azul Escuro */
+.status-finalizado,
+[data-status="Finalizado"],
+.status-pedido.status-finalizado {
+    background-color: #303F9F !important; /* Índigo */
+    color: #FFFFFF !important;
+}
+
+/* Status: Entregue - Verde Escuro */
+.status-entregue,
+[data-status="Entregue"],
+.status-pedido.status-entregue {
+    background-color: #2E7D32 !important; /* Verde Escuro Material */
+    color: #FFFFFF !important;
+}
+
+/* Status: Cancelado - Vermelho */
+.status-cancelado,
+[data-status="Cancelado"],
+.status-pedido.status-cancelado {
+    background-color: #D32F2F !important; /* Vermelho Material */
+    color: #FFFFFF !important;
+}
+
+/* Animação suave ao mudar de status */
+.status-pedido,
+.pedido-status,
+[data-status] {
+    transition: background-color 0.3s ease-in-out;
+}

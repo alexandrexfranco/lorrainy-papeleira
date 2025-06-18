@@ -1,0 +1,98 @@
+/* Otimizações para carregamento de imagens */
+
+/* Placeholder para imagens em carregamento */
+.image-loading {
+    position: relative;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+@keyframes loading-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Transição suave para imagens carregadas */
+.gallery-item img,
+.testimonial-avatar {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-item img.loaded,
+.testimonial-avatar.loaded {
+    opacity: 1;
+}
+
+/* Remover placeholder quando imagem carregar */
+.image-loading:not(.image-loading) {
+    background: none;
+    animation: none;
+}
+
+/* Otimizações para imagens responsivas */
+picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Melhorar performance de scroll */
+.gallery-grid,
+.testimonials-grid {
+    will-change: transform;
+    contain: layout style paint;
+}
+
+/* Reduzir layout shift */
+.gallery-item,
+.testimonial-card {
+    contain: layout style paint;
+}
+
+/* Otimizações para dispositivos móveis */
+@media (max-width: 768px) {
+    .image-loading {
+        background-size: 150% 100%;
+    }
+    
+    .gallery-item img,
+    .testimonial-avatar {
+        transition: opacity 0.2s ease-in-out;
+    }
+}
+
+/* Suporte para modo escuro */
+@media (prefers-color-scheme: dark) {
+    .image-loading {
+        background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    }
+}
+
+/* Melhorar acessibilidade */
+img[loading="lazy"] {
+    min-height: 1px;
+    min-width: 1px;
+}
+
+/* Fallback para navegadores sem suporte a lazy loading */
+@supports not (content-visibility: auto) {
+    .image-loading {
+        background: #f5f5f5;
+        animation: none;
+    }
+} 

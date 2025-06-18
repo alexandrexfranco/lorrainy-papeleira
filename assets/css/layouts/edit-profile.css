@@ -1,0 +1,223 @@
+/* Layout moderno para Editar Perfil - inspirado em 21st.dev */
+
+body.dashboard-body {
+    background: linear-gradient(120deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 40px 0;
+}
+
+.profile-form-card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.10), 0 1.5px 4px rgba(44, 62, 80, 0.08);
+    padding: 40px 32px 32px 32px;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-form-card h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-photo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+#profile-photo-clickable-area {
+    width: 110px !important;
+    height: 110px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+    border: 4px solid #f1f5f9;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: box-shadow 0.2s, border 0.2s;
+    cursor: pointer;
+}
+
+#profile-photo-clickable-area:hover {
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+    border: 4px solid #a5b4fc;
+}
+
+/* Foto de perfil do editar-perfil.html - sempre circular, centralizada e tamanho fixo */
+#profile-photo-preview {
+  width: 110px !important;
+  height: 110px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.camera-overlay-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6366f1;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: #374151;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #e5e7eb;
+    background: #f8fafc;
+    font-size: 1rem;
+    color: #222;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: none;
+}
+
+.form-group input:focus {
+    border: 1.5px solid #6366f1;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+}
+
+.btn-salvar-perfil {
+    background: linear-gradient(90deg, #f472b6 0%, #ec4899 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-salvar-perfil:hover {
+    background: linear-gradient(90deg, #ec4899 0%, #be185d 100%);
+    box-shadow: 0 4px 16px rgba(236, 72, 153, 0.18);
+}
+
+.btn-voltar-perfil {
+    background: linear-gradient(90deg, #f472b6 0%, #ec4899 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-left: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.btn-voltar-perfil:hover {
+    background: linear-gradient(90deg, #ec4899 0%, #be185d 100%);
+    box-shadow: 0 4px 16px rgba(236, 72, 153, 0.18);
+    color: #fff;
+    text-decoration: none;
+}
+
+.form-footer {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-message {
+  margin: 18px 0 0 0;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: center;
+  background: #f8fafc;
+  color: #d4517f;
+  border: 1.5px solid #ffd6ec;
+  box-shadow: 0 2px 8px rgba(255,105,180,0.07);
+  display: none;
+  transition: all 0.2s;
+}
+#profile-message.success {
+  color: #48c774;
+  background: #e6ffe6;
+  border-color: #b2f2b2;
+}
+#profile-message.error {
+  color: #ff3860;
+  background: #ffeaea;
+  border-color: #f5b2b2;
+}
+#profile-message.info {
+  color: #4a4a8a;
+  background: #f5f5ff;
+  border-color: #b2b2f5;
+}
+
+@media (max-width: 600px) {
+    .profile-form-card {
+        padding: 18px 6vw 24px 6vw;
+        max-width: 98vw;
+    }
+    .dashboard-container {
+        padding: 16px 0;
+    }
+    #profile-photo-clickable-area {
+        width: 90px;
+        height: 90px;
+    }
+}
