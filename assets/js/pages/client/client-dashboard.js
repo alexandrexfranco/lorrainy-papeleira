@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('detalhe-data').textContent = formatarData(pedido.data_evento);
     document.getElementById('detalhe-tipo-entrega').textContent = pedido.tipo_entrega === 'entregar' ? 
         '🚚 Entrega em Domicílio' : '🏪 Retirar no Local';
-    document.getElementById('detalhe-descricao').textContent = pedido.descricao || '---';
+    document.getElementById('detalhe-descricao').textContent = pedido.descricao_pedido || '---';
     document.getElementById('detalhe-observacao').textContent = pedido.observacao_pedido || '---';        // Configura os botões
         const editarBtn = document.getElementById('editar-pedido-btn');
         if (editarBtn) {

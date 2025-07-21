@@ -267,7 +267,7 @@ async function carregarPedidosAdmin() {
                                     <span class="detalhe-item endereco-completo">
                                         <i class="fas fa-map-marker-alt"></i>
                                         <span class="detalhe-label">Endereço:</span>
-                                        <span class="detalhe-valor">${cliente.endereco_entrega_completo || 'N/A'}</span>
+                                        <div class="detalhe-valor" style="margin-left: 24px;">${pedido.endereco_entrega_completo || 'N/A'}</div>
                                     </span>
                                 </div>
                             ` : ''}
