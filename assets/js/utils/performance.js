@@ -121,13 +121,14 @@ function setupServiceWorker() {
     
     if (config.useServiceWorker) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registrado:', registration);
-                })
-                .catch(error => {
-                    console.log('Erro ao registrar Service Worker:', error);
-                });
+            // Remover ou comentar a linha que registra o Service Worker
+            // navigator.serviceWorker.register('/sw.js')
+            //     .then(registration => {
+            //         console.log('Service Worker registrado:', registration);
+            //     })
+            //     .catch(error => {
+            //         console.log('Erro ao registrar Service Worker:', error);
+            //     });
         });
     }
 }

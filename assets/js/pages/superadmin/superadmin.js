@@ -1,3 +1,6 @@
+// Importações necessárias
+import { showToast } from '../../components/toast.js';
+
 // ========== INICIALIZAÇÃO ==========
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -324,22 +327,10 @@ window.salvarAlteracoes = async function() {
     const planoInfo = planoElement.querySelector('.superadmin-item-info');
     const planoId = planoInfo?.dataset.planoId;
 
-    console.log('ID do plano (original):', planoId);
-    console.log('Tipo do ID:', typeof planoId);
+    console.log('ID do plano:', planoId);
 
     if (!planoId) {
         showToast('Não foi possível identificar o plano', 'error');
-        return;
-    }
-
-    // Converter para número se for string
-    const planoIdNum = parseInt(planoId, 10);
-    console.log('ID do plano (convertido):', planoIdNum);
-
-    // Validar se o ID é um número válido (para IDs numéricos)
-    if (isNaN(planoIdNum) || planoIdNum <= 0) {
-        console.error('ID do plano inválido:', planoIdNum);
-        showToast('ID do plano inválido', 'error');
         return;
     }
 
@@ -385,48 +376,24 @@ window.salvarAlteracoes = async function() {
         }
 
         console.log('Dados para atualização:', atualizacao);
-        console.log('ID do plano para atualização:', planoIdNum);
-
-        // Primeiro, verificar se o plano existe
-        const { data: planoExistente, error: checkError } = await window.supabaseClient
-            .from('planos')
-            .select('id')
-            .eq('id', planoIdNum)
-            .single();
-
-        if (checkError) {
-            console.error('Erro ao verificar plano:', checkError);
-            showToast('Plano não encontrado', 'error');
-            return;
-        }
-
-        console.log('Plano encontrado:', planoExistente);
+        console.log('ID do plano para atualização:', planoId);
 
         const { data, error: updateError } = await window.supabaseClient
             .from('planos')
             .update(atualizacao)
-            .eq('id', planoIdNum)
+            .eq('id', planoId)
             .select();
 
         if (updateError) {
             console.error('Erro do Supabase:', updateError);
-            console.error('Detalhes do erro:', {
-                message: updateError.message,
-                details: updateError.details,
-                hint: updateError.hint,
-                code: updateError.code
-            });
             throw updateError;
         }
 
         console.log('Resposta do Supabase:', data);
-        console.log('Atualização realizada com sucesso');
         showToast('Alterações salvas com sucesso!', 'success');
         await carregarPlanoAtual(); // Recarregar os dados
     } catch (error) {
         console.error('Erro ao salvar alterações:', error);
-        console.error('Tipo do erro:', typeof error);
-        console.error('Mensagem do erro:', error.message);
         
         // Mostrar mensagem mais específica baseada no tipo de erro
         let mensagemErro = 'Erro ao salvar alterações';
@@ -472,44 +439,6 @@ function formatarData(dataString) {
         month: '2-digit',
         year: 'numeric'
     });
-}
-
-function showToast(message, type = 'success') {
-    // Usando o sistema de toast correto
-    const container = document.querySelector('.toast-container') || (() => {
-        const cont = document.createElement('div');
-        cont.className = 'toast-container';
-        document.body.appendChild(cont);
-        return cont;
-    })();
-    
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.setAttribute('role', 'alert');
-    toast.setAttribute('aria-live', 'polite');
-    
-    // Estrutura do toast com ícone e mensagem
-    toast.innerHTML = `
-        <div class="toast-content">
-            <i class="toast-icon ${getToastIcon(type)}" aria-hidden="true"></i>
-            <p class="toast-message">${message}</p>
-        </div>
-    `;
-    
-    container.appendChild(toast);
-    
-    // Força o reflow para garantir a animação
-    toast.offsetHeight;
-    
-    // Adiciona a classe show para iniciar a animação
-    requestAnimationFrame(() => {
-        toast.classList.add('show');
-    });
-
-    // Remove o toast após 3 segundos
-    setTimeout(() => {
-        dismissToast(toast);
-    }, 3000);
 }
 
 function getToastIcon(type) {

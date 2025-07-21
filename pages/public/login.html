@@ -57,7 +57,6 @@
                             <input type="email" 
                                    id="register-email" 
                                    placeholder="Digite seu email" 
-                                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                                    title="Digite um email válido"
                                    required>
                             <small class="form-hint">exemplo@dominio.com</small>
@@ -250,20 +249,26 @@
                 try {
                     const { data, error } = await window.supabaseClient.auth.signUp({
                         email,
-                        password
+                        password,
+                        options: {
+                            data: {
+                                nome: name,       // Enviando o nome como metadado
+                                whatsapp: whatsapp  // Enviando o whatsapp como metadado
+                            }
+                        }
                     });
-                    if (error) throw error;
-                    // Salva dados extras na tabela usuarios
-                    await window.supabaseClient.from('usuarios').insert({
-                        id: data.user.id,
-                        nome: name,
-                        whatsapp: whatsapp,
-                        email: email,
-                        tipo: 'cliente'
-                    });
+
+                    if (error) {
+                        // Se houver erro, a trigger não executou, então mostramos o erro
+                        throw error;
+                    }
+
+                    // Se chegou aqui, o cadastro e a trigger funcionaram!
                     window.showModal('register-confirmation-modal');
+
                 } catch (err) {
-                    toast.show(err.message || 'Erro ao cadastrar', 'error');
+                    // Mostra a mensagem de erro que vier do Supabase ou uma genérica
+                    toast.show(err.message || 'Erro ao cadastrar. Tente novamente.', 'error');
                 }
             });
 
