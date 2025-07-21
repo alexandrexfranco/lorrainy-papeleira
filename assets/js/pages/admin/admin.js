@@ -197,11 +197,14 @@ async function carregarPedidosAdmin() {
         pedidosFiltrados.forEach(pedido => {
             const cliente = clientesMap[pedido.id_cliente] || {};
             const li = document.createElement('li');            // Normaliza o status para a classe CSS
-            const statusClass = (pedido.status_pedido || 'pendente').toLowerCase().replace('_', '-');
+            const statusClass = (pedido.status_pedido || 'pendente')
+                .toLowerCase()
+                .replace(/[ \s_]/g, '-'); // Substitui espaço e underline por hífen
             const statusMap = {
                 'pendente': 'Pendente',
                 'aprovado': 'Aprovado',
                 'em-producao': 'Em Produção',
+                'em produção': 'Em Produção', // aceita com espaço também
                 'finalizado': 'Finalizado',
                 'entregue': 'Entregue',
                 'cancelado': 'Cancelado'
