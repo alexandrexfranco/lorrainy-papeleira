@@ -746,21 +746,33 @@ window.enviarMensagemWhatsApp = function(event, whatsapp, pedidoCodificado, clie
         const valorFormatado = pedido.valor_pedido ?
             `R$ ${parseFloat(pedido.valor_pedido).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` :
             'A definir';
-        const tamanhoFormatado = pedido.tamanho_bolo_cm ? `${pedido.tamanho_bolo_cm} cm` : 'Não especificado';
-        const mensagem = `🎂 *Detalhes do Pedido #${pedido.id}*
+        const tamanhoFormatado = pedido.tamanho_bolo_cm ? `${pedido.tamanho_bolo_cm}cm` : 'Não especificado';
+        const mensagem = `*📦 PEDIDO #${pedido.id}*
 
-👤 *Cliente:* ${cliente.nome}
-📋 *Tema:* ${pedido.tema || 'Não especificado'}
-📏 *Tamanho:* ${tamanhoFormatado}
-📅 *Data do Evento:* ${dataEvento}
-💰 *Valor:* ${valorFormatado}
-🚦 *Status:* ${pedido.status_pedido || 'Pendente'}
+` +
+            `🎂 *Tema:* ${pedido.tema || 'Não especificado'}
+` +
+            `📏 *Tamanho:* ${tamanhoFormatado}
+` +
+            `📅 *Data do Evento:* ${dataEvento}
+` +
+            `📝 *Descrição:* ${pedido.descricao_pedido || '---'}
+` +
+            (pedido.observacao_pedido ? `💬 *Observações:* ${pedido.observacao_pedido}
+` : '') +
+            `
 🚚 *Tipo de Entrega:* ${pedido.tipo_entrega || 'Não especificado'}
+` +
+            (pedido.tipo_entrega === 'entregar' && cliente.endereco_entrega_completo ? `📍 *Endereço de Entrega:*
+${cliente.endereco_entrega_completo}
+` : '') +
+            `
+💰 *Valor:* ${valorFormatado}
+` +
+            `
+🚦 *Status:* ${pedido.status_pedido || 'Pendente'}` +
+            `
 
-${pedido.descricao ? `📝 *Descrição:* ${pedido.descricao}\n` : ''}
-${pedido.observacao_pedido ? `📌 *Observações:* ${pedido.observacao_pedido}\n` : ''}
-${pedido.tipo_entrega === 'entregar' ? `📍 *Endereço de Entrega:*\n${cliente.endereco_entrega_completo || 'Endereço não disponível'}\n` : ''}
-------------------
 ✨ *Lorrainy Papeleira*
 🌟 Seu pedido é especial para nós!`;
         const mensagemCodificada = encodeURIComponent(mensagem);
