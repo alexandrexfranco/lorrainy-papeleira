@@ -538,7 +538,7 @@ window.editarPedidoAdmin = async function(idPedido) {
     document.getElementById('editar-tema-pedido').value = pedido.tema || '';
     document.getElementById('editar-tamanho-pedido').value = pedido.tamanho_bolo_cm || '';
     document.getElementById('editar-data-pedido').value = pedido.data_evento || '';
-    document.getElementById('editar-status-pedido').value = pedido.status_pedido || 'Pendente';
+    document.getElementById('editar-status-pedido').value = pedido.status_pedido || 'pendente';
     document.getElementById('editar-valor-pedido').value = pedido.valor_pedido || '';
     document.getElementById('modal-editar-pedido').style.display = 'flex';
 }
@@ -556,7 +556,7 @@ formEditarPedido.onsubmit = async function(e) {
     const tema = document.getElementById('editar-tema-pedido').value;
     const tamanho = document.getElementById('editar-tamanho-pedido').value;
     const dataInput = document.getElementById('editar-data-pedido').value;
-    const status = document.getElementById('editar-status-pedido').value;
+    const status = document.getElementById('editar-status-pedido').value; // value do select, padronizado
     const valor = document.getElementById('editar-valor-pedido').value;
     try {
         const { error } = await window.supabaseClient
@@ -565,7 +565,7 @@ formEditarPedido.onsubmit = async function(e) {
                 tema,
                 tamanho_bolo_cm: tamanho,
                 data_evento: dataInput,
-                status_pedido: status,
+                status_pedido: status, // salva o value padronizado
                 valor_pedido: valor
             })
             .eq('id', id);

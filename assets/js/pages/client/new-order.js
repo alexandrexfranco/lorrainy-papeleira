@@ -116,7 +116,7 @@ function setupEventListeners() {
             };
 
             // Adicionar endereço se for entrega
-            if (pedidoData.tipo_entrega === 'entregar') {
+            if (pedidoData.tipo_entrega === 'ENTREGAR') {
                 if (!currentProfileData || !isValidAddress(currentProfileData)) {
                     throw new Error('Para entrega, seu endereço completo precisa estar cadastrado no seu perfil.');
                 }

@@ -82,7 +82,7 @@ window.abrirNovoPedidoModal = async function() {
             popularDadosClienteFormPedido();
             popularTamanhosBolo();
             
-            if (pedidoTipoEntregaSelect) pedidoTipoEntregaSelect.value = 'retirar';
+            if (pedidoTipoEntregaSelect) pedidoTipoEntregaSelect.value = 'RETIRAR';
             if (pedidoEnderecoEntregaGroup) pedidoEnderecoEntregaGroup.style.display = 'none';
 
             if (pedidoDataEventoInput) {
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     observacao_pedido
                 };
 
-                if (tipo_entrega === 'entregar') {
+                if (tipo_entrega === 'ENTREGAR') {
                     const dadosParaEndereco = currentProfileData;
                     const enderecoCompleto = (dadosParaEndereco && [
                         dadosParaEndereco.rua,
@@ -458,8 +458,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (editarPedidoTipoEntregaSelect) {
             editarPedidoTipoEntregaSelect.addEventListener('change', function() {
                 if (editarPedidoEnderecoGroup) {
-                    editarPedidoEnderecoGroup.style.display = this.value === 'entregar' ? 'block' : 'none';
-                    if (this.value === 'entregar' && currentProfileData) {
+                    editarPedidoEnderecoGroup.style.display = this.value === 'ENTREGAR' ? 'block' : 'none';
+                    if (this.value === 'ENTREGAR' && currentProfileData) {
                         const endereco = [
                             currentProfileData.rua,
                             currentProfileData.numero_casa,
@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     };
 
                     // Adiciona endereço se for entrega
-                    if (pedidoAtualizado.tipo_entrega === 'entregar') {
+                    if (pedidoAtualizado.tipo_entrega === 'ENTREGAR') {
                         const endereco = [
                             currentProfileData.rua,
                             currentProfileData.numero_casa,
@@ -765,11 +765,11 @@ async function abrirModalEdicao(pedidoId) {
         }
         if (editarPedidoDataInput) editarPedidoDataInput.value = pedido.data_evento || '';
         if (editarPedidoTipoEntregaSelect) {
-            editarPedidoTipoEntregaSelect.value = pedido.tipo_entrega || 'retirar';
+            editarPedidoTipoEntregaSelect.value = pedido.tipo_entrega || 'RETIRAR';
             if (editarPedidoEnderecoGroup) {
-                editarPedidoEnderecoGroup.style.display = pedido.tipo_entrega === 'entregar' ? 'block' : 'none';
+                editarPedidoEnderecoGroup.style.display = pedido.tipo_entrega === 'ENTREGAR' ? 'block' : 'none';
             }
-            if (editarPedidoEnderecoPreview && pedido.tipo_entrega === 'entregar') {
+            if (editarPedidoEnderecoPreview && pedido.tipo_entrega === 'ENTREGAR') {
                 editarPedidoEnderecoPreview.textContent = pedido.endereco_entrega_completo || 'Endereço não disponível';
             }
         }
@@ -912,8 +912,8 @@ function formatarPedidoParaWhatsApp(pedido) {
         texto += `📌 *Observações:* ${pedido.observacao_pedido}\n`;
     }
     
-    texto += `\n🚚 *Entrega:* ${pedido.tipo_entrega === 'entregar' ? 'Delivery' : 'Retirar no Local'}\n`;
-    if (pedido.tipo_entrega === 'entregar' && pedido.endereco_entrega_completo) {
+    texto += `\n🚚 *Entrega:* ${pedido.tipo_entrega === 'ENTREGAR' ? 'Delivery' : 'Retirar no Local'}\n`;
+    if (pedido.tipo_entrega === 'ENTREGAR' && pedido.endereco_entrega_completo) {
         texto += `📍 *Endereço:* ${pedido.endereco_entrega_completo}\n`;
     }
     
